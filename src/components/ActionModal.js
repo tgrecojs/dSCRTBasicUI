@@ -1,9 +1,8 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
-import { ActionButton } from './actionButton';
 import Button from '@material-ui/core/Button';
-import { Backdrop, Fade, Grid, TextField } from '@material-ui/core';
+import { Backdrop, Fade, TextField } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     button: {
