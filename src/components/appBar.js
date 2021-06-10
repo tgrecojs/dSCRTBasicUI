@@ -5,10 +5,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import MenuIcon from '@material-ui/icons/Menu';
 import WbIncandescent from '@material-ui/icons/WbIncandescent';
 import Brightness2 from '@material-ui/icons/Brightness2';
-import { Icon } from '@material-ui/core';
 import { useSecret } from '../hooks/useSecret';
 import { truncateAddressString } from '../utils/strings';
 

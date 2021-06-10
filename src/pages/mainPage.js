@@ -17,6 +17,9 @@ const useStyles = makeStyles((theme) => ({
     scrtColor: {
         color: theme.palette.primary,
     },
+    subtitle: {
+        color: theme.palette.primary,
+    },
 }));
 
 function MainPage() {
@@ -29,6 +32,9 @@ function MainPage() {
                 <Grid item xs={12} style={{ textAlign: 'center' }}>
                     <Typography variant="h2">
                         {'Convert'} {<span color="red">SCRT</span>} to {<span>dSCRT</span>}
+                    </Typography>
+                    <Typography variant="subtitle1">
+                        Liquid staking with dSCRT! Stake your SCRT, get dSCRT, and accumulate automatically!
                     </Typography>
                 </Grid>
                 {/*<Grid item xs={6}>*/}
@@ -45,13 +51,10 @@ function MainPage() {
                     <TokenBalance />
                 </Grid>
                 <Grid item xs={3}>
-                    <Xrate />
+                    <>
+                        <Xrate />
+                    </>
                 </Grid>
-                {/*<Hidden mdUp>*/}
-                {/*    <Grid item xs={12}>*/}
-                {/*        <Wallet />*/}
-                {/*    </Grid>*/}
-                {/*</Hidden>*/}
                 <Grid item xs={12}>
                     <Card>
                         <Claims />

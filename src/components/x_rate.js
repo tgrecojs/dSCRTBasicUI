@@ -57,6 +57,7 @@ export default function Xrate() {
                 <Typography className={classes.pos} color="textSecondary">
                     1 dSCRT = ${(exchRate * scrtPrice).toFixed(3)}
                 </Typography>
+                {/*<APY />*/}
             </CardContent>
             {/*<CardActions>*/}
             {/*    <Button size="small">Learn More</Button>*/}

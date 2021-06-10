@@ -3,12 +3,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { useSecret, stakeSCRT, withdrawDSCRT, UNLOCK_TOKEN } from '../hooks/useSecret';
+import { stakeSCRT, useSecret, withdrawDSCRT } from '../hooks/useSecret';
 import { useOracle } from '../hooks/useOracle';
 import ActionModal from './ActionModal';
-import { Grid } from '@material-ui/core';
 import { UnlockToken } from './unlockToken';
 
 const useStyles = makeStyles({
@@ -70,7 +68,7 @@ export const TokenBalance = () => {
                 </Typography>
                 {!dScrtDisabled && exchRate ? (
                     <Typography className={classes.pos} color="textSecondary">
-                        {(Number(snip20Balance) * Number(exchRate)).toFixed(7)} SCRT
+                        ~{(Number(snip20Balance) * Number(exchRate)).toFixed(7)} SCRT
                     </Typography>
                 ) : (
                     <Typography className={classes.pos} color="textSecondary">
@@ -102,6 +100,7 @@ export const TokenBalance = () => {
                             min={Number((1 * exchangeRate).toFixed(4))}
                             text={'Withdraw'}
                             label={'dSCRT'}
+                            color={'secondary'}
                             disabled={!account || dScrtDisabled}
                             action={async (amt) => {
                                 await withdrawDSCRT(secretjs, amt);

@@ -1,18 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
-import {
-    Backdrop,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogContentText,
-    DialogTitle,
-    Fade,
-    Input,
-    TextField,
-} from '@material-ui/core';
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Input } from '@material-ui/core';
 import Slider from '@material-ui/core/Slider';
 import { useSecret } from '../hooks/useSecret';
 
@@ -81,7 +70,7 @@ export default function ActionModal(props) {
                 disabled={props.disabled}
                 size="large"
                 variant="contained"
-                color="primary"
+                color={props.color || 'primary'}
                 onClick={handleOpen}
             >
                 {props.text}

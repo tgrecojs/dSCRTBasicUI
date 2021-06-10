@@ -8,7 +8,7 @@ import { SecretContext } from './hooks/useSecret';
 
 function App() {
     const [darkState, setDarkState] = useState(useMediaQuery('(prefers-color-scheme: dark)'));
-    const mainPrimaryColor = darkState ? orange[500] : lightBlue[500];
+    const mainPrimaryColor = darkState ? orange[500] : lightBlue[300];
     const mainSecondaryColor = darkState ? deepOrange[900] : deepPurple[500];
 
     const theme = useMemo(
