@@ -2,7 +2,19 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
-import { Backdrop, Fade, TextField } from '@material-ui/core';
+import {
+    Backdrop,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    Fade,
+    Input,
+    TextField,
+} from '@material-ui/core';
+import Slider from '@material-ui/core/Slider';
+import { useSecret } from '../hooks/useSecret';
 
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -32,7 +44,8 @@ export default function ActionModal(props) {
     const classes = useStyles();
     // getModalStyle is not a pure function, we roll the style only on the first render
     const [open, setOpen] = React.useState(false);
-    const [amount, setAmount] = React.useState(undefined);
+    const [amount, setAmount] = React.useState(props.min || 1);
+    const { scrtBalance } = useSecret();
 
     const handleOpen = () => {
         setOpen(true);
@@ -42,32 +55,24 @@ export default function ActionModal(props) {
         setOpen(false);
     };
 
-    const body = (
-        <Fade in={open}>
-            <div className={classes.paper}>
-                <h2 id="simple-modal-title">{props.text}</h2>
-                <p id="simple-modal-description">Select an amount</p>
+    const handleSliderChange = (event, newValue) => {
+        setAmount(newValue);
+    };
 
-                <TextField
-                    id="standard-basic"
-                    label={props.label}
-                    value={amount}
-                    onChange={(event) => {
-                        setAmount(event.target.value);
-                    }}
-                />
-                <Button
-                    color="primary"
-                    onClick={async () => {
-                        await props.action(amount);
-                        handleClose();
-                    }}
-                >
-                    {props.text}
-                </Button>
-            </div>
-        </Fade>
-    );
+    const handleBlur = () => {
+        if (amount < 1) {
+            setAmount(1);
+        } else if (amount > scrtBalance) {
+            setAmount(scrtBalance);
+        }
+    };
+
+    const handleInputChange = (event) => {
+        if (event.target.value !== '' && Number(event.target.value) >= 1) {
+            setAmount(Number(event.target.value));
+        }
+        //setAmount(event.target.value === '' ? '' : Number(event.target.value));
+    };
 
     return (
         <div className={classes.modalWrapper}>
@@ -81,20 +86,54 @@ export default function ActionModal(props) {
             >
                 {props.text}
             </Button>
-            <Modal
-                aria-labelledby="transition-modal-title"
-                aria-describedby="transition-modal-description"
-                className={classes.modal}
-                open={open}
-                onClose={handleClose}
-                closeAfterTransition
-                BackdropComponent={Backdrop}
-                BackdropProps={{
-                    timeout: 500,
-                }}
-            >
-                {body}
-            </Modal>
+
+            <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+                <DialogTitle id="form-dialog-title">{props.text}</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>Select an amount</DialogContentText>
+                    <Slider
+                        value={typeof amount === 'number' ? amount : 1}
+                        min={props.min || 1}
+                        step={0.1}
+                        disabled={isNaN(scrtBalance)}
+                        max={Number(scrtBalance) / 1e6}
+                        onChange={handleSliderChange}
+                        aria-labelledby="input-slider"
+                    />
+                    <Input
+                        autoFocus
+                        margin="dense"
+                        id="name"
+                        value={amount}
+                        label={props.label}
+                        fullWidth
+                        onChange={handleInputChange}
+                        onBlur={handleBlur}
+                        inputProps={{
+                            step: 0.1,
+                            min: props.min || 1,
+                            disabled: isNaN(scrtBalance),
+                            max: Number(scrtBalance) / 1e6,
+                            type: 'number',
+                            'aria-labelledby': 'input-slider',
+                        }}
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose} color="primary">
+                        Cancel
+                    </Button>
+                    <Button
+                        onClick={async () => {
+                            await props.action(amount);
+                            handleClose();
+                        }}
+                        color="primary"
+                    >
+                        {props.text}
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </div>
     );
 }

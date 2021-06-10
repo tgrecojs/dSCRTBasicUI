@@ -88,6 +88,7 @@ export const TokenBalance = () => {
                 {!dScrtDisabled ? (
                     <>
                         <ActionModal
+                            min={1}
                             text={'Stake'}
                             label={'SCRT'}
                             disabled={!account || dScrtDisabled}
@@ -98,6 +99,7 @@ export const TokenBalance = () => {
                         />
 
                         <ActionModal
+                            min={Number((1 * exchangeRate).toFixed(4))}
                             text={'Withdraw'}
                             label={'dSCRT'}
                             disabled={!account || dScrtDisabled}

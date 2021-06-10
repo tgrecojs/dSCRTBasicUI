@@ -38,7 +38,7 @@ function App() {
                     ].join(','),
                 },
             }),
-        [darkState],
+        [darkState, mainPrimaryColor, mainSecondaryColor],
     );
 
     const handleThemeChange = () => {
