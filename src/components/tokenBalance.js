@@ -30,7 +30,7 @@ const useStyles = makeStyles({
 
 export const TokenBalance = () => {
     const classes = useStyles();
-    const { secretjs, dscrtBalance, dScrtDisabled, secretLoaded, account, exchangeRate } = useSecret();
+    const { secretjs, dscrtBalance, dScrtDisabled, refreshBalances, account, exchangeRate, getClaims } = useSecret();
     // const bull = <span className={classes.bullet}>•</span>;
     let [snip20Balance, setSnip20Balance] = useState(undefined);
     let [exchRate, setExchRate] = useState(undefined);
@@ -85,26 +85,26 @@ export const TokenBalance = () => {
                 ) : null}
             </CardContent>
             <CardActions>
-                {/*<Button*/}
-                {/*  size="large"*/}
-                {/*  variant="contained"*/}
-                {/*  color="primary"*/}
-                {/*  style={{ flexGrow: "1" }}*/}
-                {/*>*/}
-                {/*  Stake*/}
-                {/*</Button>*/}
                 {!dScrtDisabled ? (
                     <>
                         <ActionModal
                             text={'Stake'}
+                            label={'SCRT'}
                             disabled={!account || dScrtDisabled}
-                            action={(amt) => stakeSCRT(secretjs, amt)}
+                            action={async (amt) => {
+                                await stakeSCRT(secretjs, amt);
+                                await refreshBalances();
+                            }}
                         />
 
                         <ActionModal
                             text={'Withdraw'}
+                            label={'dSCRT'}
                             disabled={!account || dScrtDisabled}
-                            action={(amt) => withdrawDSCRT(secretjs, amt)}
+                            action={async (amt) => {
+                                await withdrawDSCRT(secretjs, amt);
+                                await getClaims();
+                            }}
                         />
                     </>
                 ) : (

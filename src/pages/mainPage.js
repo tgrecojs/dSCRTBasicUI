@@ -1,11 +1,8 @@
-import { useState } from 'react';
-import { Wallet } from '../components/wallet';
 import { Claims } from '../components/claims';
-import { Card, Grid, Hidden, Typography } from '@material-ui/core';
+import { Card, Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import TokenBalance from '../components/tokenBalance';
 import Xrate from '../components/x_rate';
-import { useSecret } from '../hooks/useSecret';
 
 const useStyles = makeStyles((theme) => ({
     root: {

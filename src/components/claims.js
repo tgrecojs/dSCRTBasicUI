@@ -20,24 +20,7 @@ const useStyles = makeStyles((theme) => ({
 const MINUTE_MS = 120000;
 
 export const Claims = () => {
-    const [claims, setClaims] = useState([]);
-    const { secretjs, account } = useSecret();
-
-    useEffect(() => {
-        const stuff = async () => {
-            if (secretjs && account) {
-                console.log('getting claims');
-                const claims = await queryClaims(secretjs, account);
-
-                setClaims(claims.pending_claims.pending);
-            }
-        };
-
-        stuff();
-        const interval = setInterval(stuff, MINUTE_MS);
-
-        return () => clearInterval(interval);
-    }, [account, secretjs]);
+    const { claims } = useSecret();
 
     const classes = useStyles();
 

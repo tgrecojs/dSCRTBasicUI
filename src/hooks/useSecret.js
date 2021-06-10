@@ -50,6 +50,7 @@ export const SecretContext = ({ children }) => {
     const [scrtBalance, setScrtBalance] = useState(undefined);
     const [dscrtBalance, setDScrtBalance] = useState(undefined);
     const [dScrtDisabled, setdScrtDisabled] = useState(true);
+    const [claims, setClaims] = useState([]);
 
     const setAccount = (account) => {
         setToLS('account', account);
@@ -59,6 +60,16 @@ export const SecretContext = ({ children }) => {
     const getAccount = () => {
         return getFromLS('account');
     };
+
+    const getClaims = async () => {
+        if (secretjs && account) {
+            console.log('getting claims');
+            const claims = await queryClaims(secretjs, account);
+
+            setClaims(claims.pending_claims.pending);
+        }
+    };
+
     const getDScrtBalance = async () => {
         if (secretjs) {
             const viewingKey = await getViewingKey({
@@ -119,6 +130,7 @@ export const SecretContext = ({ children }) => {
         getScrtBalance();
         getExchangeRate();
         getDScrtBalance();
+        getClaims();
 
         const interval = setInterval(getExchangeRate, XRATE_REFRESH_TIME);
         const interval2 = setInterval(getScrtBalance, BALANCE_REFRESH_TIME);
@@ -183,6 +195,8 @@ export const SecretContext = ({ children }) => {
                 account,
                 exchangeRate,
                 scrtBalance,
+                claims,
+                getClaims,
                 refreshBalances,
             }}
         >

@@ -51,13 +51,19 @@ export default function ActionModal(props) {
 
                 <TextField
                     id="standard-basic"
-                    label="SCRT"
+                    label={props.label}
                     value={amount}
                     onChange={(event) => {
                         setAmount(event.target.value);
                     }}
                 />
-                <Button color="primary" onClick={() => props.action(amount)}>
+                <Button
+                    color="primary"
+                    onClick={async () => {
+                        await props.action(amount);
+                        handleClose();
+                    }}
+                >
                     {props.text}
                 </Button>
             </div>
