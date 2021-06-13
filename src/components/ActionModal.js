@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Input } from '@material-ui/core';
+import {
+    CircularProgress,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    Input,
+} from '@material-ui/core';
 import Slider from '@material-ui/core/Slider';
 import { useSecret } from '../hooks/useSecret';
 
@@ -27,6 +35,9 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    dialogContent: {
+        marginTop: theme.spacing(-2),
+    },
 }));
 
 export default function ActionModal(props) {
@@ -34,7 +45,7 @@ export default function ActionModal(props) {
     // getModalStyle is not a pure function, we roll the style only on the first render
     const [open, setOpen] = React.useState(false);
     const [amount, setAmount] = React.useState(props.min || 1);
-    const { scrtBalance } = useSecret();
+    const [loading, setLoading] = useState();
 
     const handleOpen = () => {
         setOpen(true);
@@ -49,16 +60,14 @@ export default function ActionModal(props) {
     };
 
     const handleBlur = () => {
-        if (amount < 1) {
-            setAmount(1);
-        } else if (amount > scrtBalance) {
-            setAmount(scrtBalance);
+        if (amount > props.balance) {
+            setAmount(props.balance);
         }
     };
 
     const handleInputChange = (event) => {
-        if (event.target.value !== '' && Number(event.target.value) >= 1) {
-            setAmount(Number(event.target.value));
+        if (event.target.value !== '') {
+            setAmount(event.target.value);
         }
         //setAmount(event.target.value === '' ? '' : Number(event.target.value));
     };
@@ -78,48 +87,63 @@ export default function ActionModal(props) {
 
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">{props.text}</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>Select an amount</DialogContentText>
-                    <Slider
-                        value={typeof amount === 'number' ? amount : 1}
-                        min={props.min || 1}
-                        step={0.1}
-                        disabled={isNaN(scrtBalance)}
-                        max={Number(scrtBalance) / 1e6}
-                        onChange={handleSliderChange}
-                        aria-labelledby="input-slider"
-                    />
-                    <Input
-                        autoFocus
-                        margin="dense"
-                        id="name"
-                        value={amount}
-                        label={props.label}
-                        fullWidth
-                        onChange={handleInputChange}
-                        onBlur={handleBlur}
-                        inputProps={{
-                            step: 0.1,
-                            min: props.min || 1,
-                            disabled: isNaN(scrtBalance),
-                            max: Number(scrtBalance) / 1e6,
-                            type: 'number',
-                            'aria-labelledby': 'input-slider',
-                        }}
-                    />
+                <DialogContent className={classes.dialogContent}>
+                    {props.dialogContent}
+                    <div>
+                        <Slider
+                            value={typeof amount === 'number' ? amount : props.min || 0}
+                            step={0.1}
+                            disabled={isNaN(props.balance)}
+                            max={Number(props.balance) / 1e6}
+                            onChange={handleSliderChange}
+                            style={{ maxWidth: '50%' }}
+                            aria-labelledby="input-slider"
+                        />
+                        <Button
+                            color={'primary'}
+                            style={{ borderRadius: 10 }}
+                            onClick={() => {
+                                setAmount(Number(props.balance) / 1e6);
+                            }}
+                        >
+                            max
+                        </Button>
+                    </div>
+                    <div>
+                        <Input
+                            autoFocus
+                            id="name"
+                            min={0}
+                            value={amount}
+                            label={props.label}
+                            onChange={handleInputChange}
+                            onBlur={handleBlur}
+                            style={{ maxWidth: '25%' }}
+                            inputProps={{
+                                disabled: isNaN(props.balance),
+                                max: Number(props.balance) / 1e6,
+                                'aria-labelledby': 'input-slider',
+                            }}
+                        />
+                        {props.label}
+                    </div>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">
                         Cancel
                     </Button>
                     <Button
+                        disabled={amount < props.min}
+                        hidden={loading}
                         onClick={async () => {
+                            setLoading(true);
                             await props.action(amount);
+                            setLoading(false);
                             handleClose();
                         }}
                         color="primary"
                     >
-                        {props.text}
+                        {loading ? <CircularProgress /> : props.text}
                     </Button>
                 </DialogActions>
             </Dialog>

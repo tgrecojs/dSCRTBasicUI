@@ -151,7 +151,32 @@ export const withdraw = async ({ secretNetwork, amount, contractAddress, tokenCo
     return null;
 };
 
-const viewVote = async (secretNetwork, proposalId, viewingKey, address, tokenContract) => {
+export const queryProposal = async (secretNetwork, proposalId) => {
+    try {
+        const result = await axios.get(`https://binance.node.enigma.co/gov/proposals/${proposalId}`);
+        if (result.status !== 200) {
+            throw new Error('Failed to get proposal');
+        }
+        return result.data.result;
+    } catch (e) {
+        console.log(`Failed to get proposal data ${e}`);
+    }
+    return null;
+};
+
+export const queryActiveProposals = async (secretNetwork, votingContract) => {
+    try {
+        // return secretNetwork.queryContractSmart(votingContract, {
+        //     active_proposals: {},
+        // });
+        return [];
+    } catch (e) {
+        console.log(`Failed to get active proposals ${e}`);
+    }
+    return null;
+};
+
+export const viewVote = async ({ secretNetwork, proposalId, viewingKey, address, tokenContract }) => {
     try {
         return secretNetwork.queryContractSmart(tokenContract, {
             view_vote: { proposal: proposalId, key: viewingKey, address },
@@ -162,10 +187,10 @@ const viewVote = async (secretNetwork, proposalId, viewingKey, address, tokenCon
     return null;
 };
 
-const vote = async (secretNetwork, proposalId, voteOption, tokenContract) => {
+export const executeVote = async (secretNetwork, proposalId, voteOption, tokenContract) => {
     try {
         return secretNetwork.execute(tokenContract, {
-            vote: { proposal: proposalId, vote: voteOption },
+            vote: { proposal: Number(proposalId), vote: voteOption },
         });
     } catch (e) {
         console.log(`Failed to vote ${e}`);

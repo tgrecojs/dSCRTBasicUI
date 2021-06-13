@@ -8,6 +8,7 @@ import { stakeSCRT, useSecret, withdrawDSCRT } from '../hooks/useSecret';
 import { useOracle } from '../hooks/useOracle';
 import ActionModal from './ActionModal';
 import { UnlockToken } from './unlockToken';
+import { DialogContent, DialogContentText } from '@material-ui/core';
 
 const useStyles = makeStyles({
     root: {
@@ -28,7 +29,8 @@ const useStyles = makeStyles({
 
 export const TokenBalance = () => {
     const classes = useStyles();
-    const { secretjs, dscrtBalance, dScrtDisabled, refreshBalances, account, exchangeRate, getClaims } = useSecret();
+    const { secretjs, scrtBalance, dscrtBalance, dScrtDisabled, refreshBalances, account, exchangeRate, getClaims } =
+        useSecret();
     // const bull = <span className={classes.bullet}>•</span>;
     let [snip20Balance, setSnip20Balance] = useState(undefined);
     let [exchRate, setExchRate] = useState(undefined);
@@ -54,65 +56,85 @@ export const TokenBalance = () => {
         stuff();
     }, [exchangeRate]);
 
-    // let balance = await getSnip20Balance(
-    //   "secret1y5x6yrc4suagjvd3c6swjnv3r78rkrn2250l2e"
-    // );
     return (
-        <Card className={classes.root}>
-            <CardContent>
-                <Typography className={classes.title} color="textSecondary" gutterBottom>
-                    dSCRT Balance
-                </Typography>
-                <Typography variant="h3" component="h2">
-                    {dScrtDisabled ? `... dSCRT` : `${snip20Balance} dSCRT`}
-                </Typography>
-                {!dScrtDisabled && exchRate ? (
-                    <Typography className={classes.pos} color="textSecondary">
-                        ~{(Number(snip20Balance) * Number(exchRate)).toFixed(7)} SCRT
+        <>
+            <Card className={classes.root}>
+                <CardContent>
+                    <Typography className={classes.title} color="textSecondary" gutterBottom>
+                        dSCRT Balance
                     </Typography>
-                ) : (
-                    <Typography className={classes.pos} color="textSecondary">
-                        Unlock wallet to start staking!{' '}
+                    <Typography variant="h3" component="h2">
+                        {dScrtDisabled ? `... dSCRT` : `${snip20Balance} dSCRT`}
                     </Typography>
-                )}
-                {!dScrtDisabled && scrtPrice ? (
-                    <Typography className={classes.pos} color="textSecondary">
-                        ~$
-                        {(Number(snip20Balance) * Number(exchRate) * Number(scrtPrice)).toFixed(3)}
-                    </Typography>
-                ) : null}
-            </CardContent>
-            <CardActions>
-                {!dScrtDisabled ? (
-                    <>
-                        <ActionModal
-                            min={1}
-                            text={'Stake'}
-                            label={'SCRT'}
-                            disabled={!account || dScrtDisabled}
-                            action={async (amt) => {
-                                await stakeSCRT(secretjs, amt);
-                                await refreshBalances();
-                            }}
-                        />
+                    {!dScrtDisabled && exchRate ? (
+                        <Typography className={classes.pos} color="textSecondary">
+                            ~{(Number(snip20Balance) * Number(exchRate)).toFixed(7)} SCRT
+                        </Typography>
+                    ) : (
+                        <Typography className={classes.pos} color="textSecondary">
+                            Unlock wallet to start staking!{' '}
+                        </Typography>
+                    )}
+                    {!dScrtDisabled && scrtPrice ? (
+                        <Typography className={classes.pos} color="textSecondary">
+                            ~$
+                            {(Number(snip20Balance) * Number(exchRate) * Number(scrtPrice)).toFixed(3)}
+                        </Typography>
+                    ) : null}
+                </CardContent>
+                <CardActions>
+                    {!dScrtDisabled ? (
+                        <>
+                            <ActionModal
+                                min={1}
+                                text={'Stake'}
+                                balance={scrtBalance}
+                                label={'SCRT'}
+                                disabled={!account || dScrtDisabled}
+                                action={async (amt) => {
+                                    await stakeSCRT(secretjs, amt);
+                                    await refreshBalances();
+                                }}
+                                dialogContent={
+                                    <DialogContentText>
+                                        <Typography variant={'body1'}>Select an amount to deposit</Typography>
+                                        <Typography variant={'body1'}>
+                                            Warning: Staking carries a 0.8% fee on deposits
+                                        </Typography>
+                                        <Typography variant={'body1'}>
+                                            The minimum amount that can be staked is 1 SCRT
+                                        </Typography>
+                                    </DialogContentText>
+                                }
+                            />
 
-                        <ActionModal
-                            min={Number((1 * exchangeRate).toFixed(4))}
-                            text={'Withdraw'}
-                            label={'dSCRT'}
-                            color={'secondary'}
-                            disabled={!account || dScrtDisabled}
-                            action={async (amt) => {
-                                await withdrawDSCRT(secretjs, amt);
-                                await getClaims();
-                            }}
-                        />
-                    </>
-                ) : (
-                    <UnlockToken />
-                )}
-            </CardActions>
-        </Card>
+                            <ActionModal
+                                min={1 / exchangeRate}
+                                balance={dscrtBalance}
+                                text={'Withdraw'}
+                                label={'dSCRT'}
+                                color={'secondary'}
+                                disabled={!account || dScrtDisabled}
+                                action={async (amt) => {
+                                    await withdrawDSCRT(secretjs, amt);
+                                    await getClaims();
+                                }}
+                                dialogContent={
+                                    <DialogContentText>
+                                        <Typography variant={'body1'}>Select an amount to withdraw</Typography>
+                                        <Typography variant={'body1'}>
+                                            You may only withdraw a minimum of {1 / exchangeRate} dSCRT
+                                        </Typography>
+                                    </DialogContentText>
+                                }
+                            />
+                        </>
+                    ) : (
+                        <UnlockToken />
+                    )}
+                </CardActions>
+            </Card>
+        </>
     );
 };
 

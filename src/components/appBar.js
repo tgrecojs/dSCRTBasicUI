@@ -9,6 +9,7 @@ import WbIncandescent from '@material-ui/icons/WbIncandescent';
 import Brightness2 from '@material-ui/icons/Brightness2';
 import { useSecret } from '../hooks/useSecret';
 import { truncateAddressString } from '../utils/strings';
+import { Container } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -17,13 +18,31 @@ const useStyles = makeStyles((theme) => ({
     menuButton: {
         marginRight: theme.spacing(2),
         marginLeft: theme.spacing(2),
+        marginTop: theme.spacing(1),
     },
     title: {
+        marginTop: theme.spacing(1),
         marginRight: theme.spacing(2),
     },
     balance: {
+        borderRadius: '10px',
+        backgroundColor: theme.palette.primary.dark,
+        padding: theme.spacing(1),
+    },
+    appBarBalance: {
         flexGrow: 1,
         marginLeft: theme.spacing(2),
+
+        display: 'flex',
+    },
+    appBarItem: {
+        backgroundColor: theme.palette.primary.dark,
+        display: 'flex',
+        justifyContent: 'center',
+        borderRadius: '10px',
+        marginLeft: theme.spacing(1),
+        paddingLeft: theme.spacing(2),
+        paddingBottom: theme.spacing(1),
     },
 }));
 
@@ -67,14 +86,21 @@ export default function MenuAppBar(props) {
                     {/*    <MenuIcon />*/}
                     {/*</IconButton>*/}
                     <>
-                        <AccountCircle className={classes.menuButton} />
-                        <Typography variant="h6" className={classes.title}>
-                            {selectedAccount ? truncateAddressString(selectedAccount) : 'Connect Wallet'}
-                        </Typography>
-                        <Typography variant="h6" className={classes.balance}>
-                            {(Number(scrtBalance) / 1e6).toFixed(3)}
-                            {' SCRT'}
-                        </Typography>
+                        <div className={classes.appBarItem}>
+                            {/*<Container className={classes.menuButton}>*/}
+                            {/*    <AccountCircle className={classes.menuButton} />*/}
+                            {/*</Container>*/}
+
+                            <Typography variant="h6" className={classes.title}>
+                                {selectedAccount ? truncateAddressString(selectedAccount) : 'Connect Wallet'}
+                            </Typography>
+                        </div>
+                        <div className={classes.appBarBalance}>
+                            <Typography variant="h6" className={classes.balance}>
+                                {(Number(scrtBalance) / 1e6).toFixed(3)}
+                                {' SCRT'}
+                            </Typography>
+                        </div>
                     </>
                     <div>
                         {props.isDark ? (
