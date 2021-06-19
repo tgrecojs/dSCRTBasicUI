@@ -127,6 +127,7 @@ export default function ActionModal(props) {
                         />
                         {props.label}
                     </div>
+                    {props.xrate ? <div>~{(Number(props.xrate) * Number(amount)).toFixed(3)} SCRT</div> : null}
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">

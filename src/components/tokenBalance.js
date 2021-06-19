@@ -109,7 +109,8 @@ export const TokenBalance = () => {
                             />
 
                             <ActionModal
-                                min={1 / exchangeRate}
+                                min={Number((1 / exchangeRate).toFixed(4))}
+                                xrate={exchangeRate}
                                 balance={dscrtBalance}
                                 text={'Withdraw'}
                                 label={'dSCRT'}
@@ -123,7 +124,7 @@ export const TokenBalance = () => {
                                     <DialogContentText>
                                         <Typography variant={'body1'}>Select an amount to withdraw</Typography>
                                         <Typography variant={'body1'}>
-                                            You may only withdraw a minimum of {1 / exchangeRate} dSCRT
+                                            You may only withdraw a minimum of {(1 / exchangeRate).toFixed(4)} dSCRT
                                         </Typography>
                                     </DialogContentText>
                                 }
