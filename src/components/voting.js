@@ -26,11 +26,7 @@ export const Voting = () => {
                     return (
                         <ListItem key={proposal}>
                             <ListItemText primary={proposal.content.value.title} secondary={proposal.voting_end_time} />
-                            {/*<ListItemText*/}
-                            {/*    primary={timeDifference(Number(claim.withdraw.available_time) * 1000, Date.now())}*/}
-                            {/*    secondary={'till available'}*/}
-                            {/*    classes={{ root: classes.listItemRootOverride }}*/}
-                            {/*/>*/}
+
                             {dScrtDisabled ? (
                                 <ListItemText primary="Unlock to see your vote" secondary={'Your vote'} />
                             ) : votes && votes[Number(proposal.id)] ? (

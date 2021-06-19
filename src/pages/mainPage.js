@@ -8,6 +8,8 @@ import { stakingContract, tokenContract } from '../utils/consts';
 import { truncateAddressString } from '../utils/strings';
 import CardContent from '@material-ui/core/CardContent';
 import React from 'react';
+import { useTVL } from '../hooks/useTVL';
+import { useOracle } from '../hooks/useOracle';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -35,6 +37,8 @@ const useStyles = makeStyles((theme) => ({
 
 function MainPage() {
     const classes = useStyles();
+    const [tvl] = useTVL();
+    const [scrtPrice] = useOracle();
 
     // className="App"
     return (
@@ -121,8 +125,13 @@ function MainPage() {
                             <Typography className={classes.titleText} color="textSecondary" gutterBottom>
                                 Currently staked{' '}
                             </Typography>
-                            <Typography variant={'h4'}> 10,100 SCRT </Typography>
-                            <Typography color="textSecondary">$100,000</Typography>
+                            <Typography variant={'h4'}>
+                                {' '}
+                                {new Intl.NumberFormat('en-US', {}).format(+Number(tvl) / 1e6)} SCRT{' '}
+                            </Typography>
+                            <Typography color="textSecondary">
+                                ${new Intl.NumberFormat('en-US', {}).format((+Number(tvl) * Number(scrtPrice)) / 1e6)}
+                            </Typography>
                         </CardContent>
                     </Card>
                 </Grid>
