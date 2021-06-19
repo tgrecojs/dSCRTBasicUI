@@ -30,10 +30,10 @@ export default function HelpModal() {
                 <DialogTitle id="responsive-dialog-title">{'General'}</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        dSCRT is a variable exchange rate (VXR) derivative for staked Secret. What this means is that
-                        there is a contract that handles staking and compounding staking rewards for you, giving you an
-                        amount of dSCRT that equals your stake. The ratio between dSCRT and SCRT changes, which will
-                        reflect your staking rewards.
+                        dSCRT is a variable exchange rate (VXR) derivative for staked Secret (SCRT). What this means is
+                        that there is a contract that handles staking and compounding staking rewards for you, giving
+                        you an amount of dSCRT that equals your stake. The ratio between dSCRT and SCRT changes, which
+                        will reflect your staking rewards.
                         <p>
                             Example: You stake 100 SCRT, which is equal to 95 dSCRT. After 1 year, your 95 dSCRT will be
                             worth 130 SCRT, which is a 30% APY.
