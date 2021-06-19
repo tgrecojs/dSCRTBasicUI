@@ -10,6 +10,7 @@ import CardContent from '@material-ui/core/CardContent';
 import React from 'react';
 import { useTVL } from '../hooks/useTVL';
 import { useOracle } from '../hooks/useOracle';
+import HelpModal from '../components/helpModal';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -48,6 +49,7 @@ function MainPage() {
                     <Typography variant="h2">
                         {'Convert'} {<span color="red">SCRT</span>} to {<span>dSCRT</span>}
                     </Typography>
+                    <HelpModal />
                     <Typography variant="subtitle1">
                         Liquid staking with dSCRT! Stake your SCRT, get dSCRT, and accumulate automatically!
                     </Typography>
