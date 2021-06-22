@@ -11,6 +11,7 @@ import React from 'react';
 import { useTVL } from '../hooks/useTVL';
 import { useOracle } from '../hooks/useOracle';
 import HelpModal from '../components/helpModal';
+import WhyModal from '../components/whyModal';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -49,7 +50,7 @@ function MainPage() {
                     <Typography variant="h2">
                         {'Convert'} {<span color="red">SCRT</span>} to {<span>dSCRT</span>}
                     </Typography>
-                    <HelpModal />
+
                     <Typography variant="subtitle1">
                         Liquid staking with dSCRT! Stake your SCRT, get dSCRT, and accumulate automatically!
                     </Typography>
@@ -57,6 +58,12 @@ function MainPage() {
                         Cashmaney takes absolutely no responsibility for any funds gained, lost, disappeared, or
                         bamboozeled as a result of usage of this software. USE AT YOUR OWN RISK.
                     </Typography>
+                </Grid>
+                <Grid item xs={6} style={{ textAlign: 'right' }}>
+                    <HelpModal />
+                </Grid>
+                <Grid item xs={6} style={{ textAlign: 'left' }}>
+                    <WhyModal />
                 </Grid>
                 {/*<Grid item xs={6}>*/}
                 {/*    <TextField id="standard-basic" label="SCRT" value={depositAmount} onChange={(event) => {*/}

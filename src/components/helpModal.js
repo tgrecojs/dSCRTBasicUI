@@ -43,37 +43,32 @@ export default function HelpModal() {
                             will be distributed amongst dSCRT users as well
                         </p>
                     </DialogContentText>
-                    <DialogTitle id="responsive-dialog-title">{'Withdraws'}</DialogTitle>
+                    <DialogTitle id="responsive-dialog-title">{'Purpose'}</DialogTitle>
                     <DialogContentText>
-                        the dSCRT contract stakes for you, but when withdrawing it must still account for unbonding. If
-                        you wish to withdraw your stake, there is a 21 day unbonding period. After the unbonding period,
-                        your staked SCRT will appear in your account. If this did not happen, you can manually trigger a
-                        claim, which will transfer the funds to your account.
-                    </DialogContentText>
-                    <DialogTitle id="responsive-dialog-title">{'Deposits'}</DialogTitle>
-                    <DialogContentText>
-                        Depositing SCRT is similar to staking, but when depositing there is a 0.8% deposit fee. This fee
-                        will help fund the development of dSCRT, as well as become a source for resources allocated to
-                        the governance token holders
-                    </DialogContentText>
-                    <DialogTitle id="responsive-dialog-title">{'Validators'}</DialogTitle>
-                    <DialogContentText>
-                        dSCRT is meant to be an inclusive, network-wide solution. The contracts support multiple
-                        validators, where the staked amounts automatically balance among the different validators.
-                    </DialogContentText>
-                    <DialogTitle id="responsive-dialog-title">{'$CASH'}</DialogTitle>
-                    <DialogContentText>
-                        $CASH is the dSCRT governance token. dSCRT aims to be a community-governed service. The number
-                        of validators (and handling mis-behaving validators), developing new features (liqudity pools
-                        that allow immediate withdrawals, for example) are all meant to be governed by the community. As
-                        such, $CASH, is the dSCRT governance token. It will be distributed amongst dSCRT holders and
-                        traders at a later time
-                    </DialogContentText>
-                    <DialogTitle id="responsive-dialog-title">{'Voting'}</DialogTitle>
-                    <DialogContentText>
-                        When you stake with dSCRT you do not give up your voting rights. Voting for dSCRT holders is
-                        handled by the dSCRT Secret Contract - all holders of dSCRT have a private vote, the result of
-                        which will determine how dSCRT votes on-chain for each governance proposal
+                        dSCRT's purpose is to provide a liquid, fungible token for a user, representing his stake in the
+                        network. This token will accrue value, in a similar fashion to PoS staking which will unlock
+                        farming, and yield compounding opportunities. The goal is not to optimize APYs for users, but
+                        rather:
+                        {
+                            <p>
+                                <li>Automatic compounding of rewards</li>
+                                <li>Compounding of rewards without triggering a taxable event (if relevant)</li>
+                                <li>
+                                    Creating a fungible token which allows double-dipping in DeFi applications while
+                                    still accruing network-level staking rewards
+                                </li>
+                                <li>Minimizing validator risk by spreading delegations out to multiple validators </li>
+                                <li>Creating a mechanism for private & secret governance voting</li>
+                                <li>
+                                    Creating an asset class that accrues network-level staking rewards while still
+                                    remaining liquid
+                                </li>
+                                <li>
+                                    Enabling "private staking", where buying dSCRT on secretswap effectively creates
+                                    anonymous staking
+                                </li>
+                            </p>
+                        }
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>

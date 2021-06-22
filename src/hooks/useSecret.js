@@ -15,20 +15,28 @@ import {
 import { stakingContract, tokenContract, votingContract } from '../utils/consts';
 
 export const stakeSCRT = async (secretjs, amountScrt) => {
-    await deposit({
-        secretNetwork: secretjs,
-        amount: Number(amountScrt) * 1e6,
-        stakingContractAddress: stakingContract,
-    });
+    try {
+        await deposit({
+            secretNetwork: secretjs,
+            amount: Number(amountScrt) * 1e6,
+            stakingContractAddress: stakingContract,
+        });
+    } catch (e) {
+        console.log(`Failed to deposit: ${e}`);
+    }
 };
 
 export const withdrawDSCRT = async (secretjs, amountDscrt) => {
-    await withdraw({
-        secretNetwork: secretjs,
-        amount: Number(amountDscrt) * 1e6,
-        contractAddress: stakingContract,
-        tokenContractAddress: tokenContract,
-    });
+    try {
+        await withdraw({
+            secretNetwork: secretjs,
+            amount: Number(amountDscrt) * 1e6,
+            contractAddress: stakingContract,
+            tokenContractAddress: tokenContract,
+        });
+    } catch (e) {
+        console.log(`Failed to withdraw: ${e}`);
+    }
 };
 
 export const queryClaims = async (secretjs, account) => {
