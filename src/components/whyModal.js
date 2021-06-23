@@ -63,7 +63,7 @@ export default function WhyModal() {
                         of validators (and handling mis-behaving validators), developing new features (liqudity pools
                         that allow immediate withdrawals, for example) are all meant to be governed by the community. As
                         such, $CASH, is the dSCRT governance token. It will be distributed amongst dSCRT holders and
-                        traders at a later time
+                        traders that use dSCRT by 31.7.21
                     </DialogContentText>
                     <DialogTitle id="responsive-dialog-title">{'Voting'}</DialogTitle>
                     <DialogContentText>

@@ -12,6 +12,7 @@ import { useTVL } from '../hooks/useTVL';
 import { useOracle } from '../hooks/useOracle';
 import HelpModal from '../components/helpModal';
 import WhyModal from '../components/whyModal';
+import DialogContentText from '@material-ui/core/DialogContentText';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -92,7 +93,7 @@ function MainPage() {
                             </Typography>
                             <Typography variant={'body2'} color={'textSecondary'} style={{ marginTop: 5 }}>
                                 CASH governance DAO will govern dSCRT, manage validators and develop the ecosystem using
-                                contract fees. COMING SOON
+                                contract fees. Aquire dSCRT by 31.7.21 to be elligible!
                             </Typography>
                         </CardContent>
                     </Card>
