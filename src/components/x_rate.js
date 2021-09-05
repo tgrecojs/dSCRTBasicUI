@@ -45,16 +45,16 @@ export default function Xrate() {
     return (
         <Card className={classes.root}>
             <CardContent>
-                <Typography className={classes.title} color="textSecondary" gutterBottom>
+                <Typography className={classes.title} color="textPrimary" gutterBottom>
                     Exchange Rate
                 </Typography>
-                <Typography variant="h3" component="h2">
+                <Typography color="textPrimary" variant="h3" component="h2">
                     {exchRate}
                 </Typography>
-                <Typography className={classes.pos} color="textSecondary">
+                <Typography className={classes.pos} color="textPrimary">
                     1 dSCRT = {exchRate} SCRT
                 </Typography>
-                <Typography className={classes.pos} color="textSecondary">
+                <Typography className={classes.pos} color="textPrimary">
                     1 dSCRT = ${(exchRate * scrtPrice).toFixed(3)}
                 </Typography>
                 {/*<APY />*/}
