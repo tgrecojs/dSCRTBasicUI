@@ -44,8 +44,7 @@ function MainPage() {
     const [scrtPrice] = useOracle();
 
     // className="App"
-    return (
-        <div className={classes.root}>
+    return (<>
             <Grid container spacing={3}>
                 <Grid item xs={12} style={{ textAlign: 'center' }}>
                     <Typography variant="h2">
@@ -60,10 +59,10 @@ function MainPage() {
                         bamboozeled as a result of usage of this software. USE AT YOUR OWN RISK.
                     </Typography>
                 </Grid>
-                <Grid item xs={6} style={{ textAlign: 'right' }}>
+                <Grid item sm={12} xs={6} style={{ textAlign: 'right' }}>
                     <HelpModal />
                 </Grid>
-                <Grid item xs={6} style={{ textAlign: 'left' }}>
+                <Grid item sm={12}  xs={6} style={{ textAlign: 'left' }}>
                     <WhyModal />
                 </Grid>
                 {/*<Grid item xs={6}>*/}
@@ -84,7 +83,7 @@ function MainPage() {
                         <Xrate />
                     </>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item sm={8} xs={12}>
                     <Card>
                         <CardContent>
                             <Typography variant={'h4'}>Want to earn $CASH?</Typography>
@@ -98,7 +97,7 @@ function MainPage() {
                         </CardContent>
                     </Card>
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item sm={6} xs={12}>
                     <Card>
                         <CardContent>
                             <Typography variant={'body2'}>
@@ -129,7 +128,7 @@ function MainPage() {
                         </CardContent>
                     </Card>
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item sm={6} xs={12}>
                     <Card>
                         <CardContent>
                             <Typography className={classes.titleText} color="textSecondary" gutterBottom>
@@ -166,7 +165,7 @@ function MainPage() {
             {/*  <APY />*/}
             {/*  <Help />*/}
             {/*</Hidden>*/}
-        </div>
+    </>
     );
 }
 
